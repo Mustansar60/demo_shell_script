@@ -1,5 +1,18 @@
 #!/bin/bash
 
+<< help
+=========================================================
+Backup & Git Workflow Script
+- Creates a timestamped backup of the repo
+- Commits backup and script to dev branch
+- Merges dev into main and pushes both branches
+
+NOTE: This script can be added to cron for automatic backups
+Example cron entry (runs at 2 AM daily):
+0 2 * * * /home/ubuntu/linux_for_devOps/backup.sh >> /home/ubuntu/linux_for_devOps/backup.log 2>&1
+=========================================================
+help
+
 # ----------------------------
 # Paths
 # ----------------------------
@@ -8,7 +21,7 @@ destination_dir="/home/ubuntu/linux_for_devOps/backups"
 mkdir -p "$destination_dir"
 
 # ----------------------------
-# Create backup (exclude backups folder)
+# Create backup (exclude backups folder itself)
 # ----------------------------
 timestamp=$(date '+%Y-%m-%d-%H-%M-%S')
 backup_file="${destination_dir}/backup_${timestamp}.zip"
@@ -36,4 +49,3 @@ git status
 git branch
 
 echo "✅ DevOps backup + Git workflow complete!"
-
